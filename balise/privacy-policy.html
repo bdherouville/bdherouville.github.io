@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balise — Privacy policy</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+  h2 { font-size: 1.15rem; margin-top: 2.25rem; }
+  .updated { color: #666; margin-top: 0; }
+  .lede { font-size: 1.05rem; border-left: 3px solid #C6A96A; padding-left: 1rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid rgba(128,128,128,.35); vertical-align: top; }
+  code { background: rgba(128,128,128,.15); padding: .1rem .3rem; border-radius: 3px; }
+  @media (prefers-color-scheme: dark) { .updated { color: #999; } }
+</style>
+</head>
+<body>
+
+<h1>Balise — Privacy policy</h1>
+<p class="updated">Last updated: 2026-08-08</p>
+
+<p>Balise is a trail companion for Wear OS watches. It records GPS tracks and follows
+routes you load yourself, using map data stored on the watch.</p>
+
+<p class="lede"><strong>Your location never leaves your watch.</strong> Balise has no account,
+no login, no ads, and no phone app. It works fully offline.</p>
+
+<h2>Who is responsible for your data</h2>
+<p>Bertrand d'Hérouville, publisher of Balise.<br>
+Privacy contact: <code>[FILL: dedicated privacy e-mail address]</code></p>
+
+<h2>What Balise stores on your watch</h2>
+<p>All of it stays in the app's private storage on the watch. None of it is uploaded, and
+Android's automatic cloud backup is disabled for this app, so it is not copied off the
+device that way either.</p>
+<ul>
+  <li><strong>Recorded tracks</strong> — GPS positions, timestamps and derived session data for trips you record.</li>
+  <li><strong>Routes</strong> — GPX files you import, and their geometry.</li>
+  <li><strong>Offline map packages</strong> — map data you choose to download.</li>
+  <li><strong>Your settings</strong>, including whether you have opted in to diagnostics.</li>
+</ul>
+
+<h2>Location</h2>
+<p>Balise requests precise and approximate location, and runs a foreground service while
+recording so a trip is not lost when the screen turns off.</p>
+<p>Your location is used <strong>only on the watch</strong>, to draw the map, record your track and
+follow your route. <strong>It is never transmitted anywhere.</strong> No code path in Balise sends a
+coordinate off the device, and no diagnostics event can carry one — the diagnostics described
+below can only send values from a fixed, reviewed list of event names.</p>
+<p>Google Play's Data Safety form defines “collected” as <em>transmitted off the device</em>. By that
+definition Balise does not collect your location. It does record it locally, which is the whole
+point of the app, and you can delete it.</p>
+
+<h2>When Balise uses the network</h2>
+<p>Balise makes no network connection during a trip. Exactly two things can reach the internet,
+both outside of recording:</p>
+<ol>
+  <li><strong>Downloading offline maps</strong> — only when you explicitly ask, over HTTPS, from the
+      map catalogue the app is configured with. Map data is signed and verified before installation.</li>
+  <li><strong>Optional anonymous diagnostics</strong> — off by default. See below.</li>
+</ol>
+<p>Nothing else in the app opens a connection.</p>
+
+<h2>Optional diagnostics</h2>
+<p>Diagnostics are <strong>off by default</strong> and only run if you explicitly turn them on in
+<em>Settings → Privacy &amp; data</em>.</p>
+<ul>
+  <li>Only <strong>pseudonymous event names</strong> from a fixed, reviewed list are sent — never location,
+      route names, file names, screen contents, free text, error text, or anything identifying you.</li>
+  <li>Data goes to PostHog, hosted in the EU, over HTTPS.</li>
+  <li>Capture is <strong>suspended entirely</strong> while a trip is active, paused or in an uncertain state.
+      Diagnostics never run alongside a recording.</li>
+  <li>You can withdraw consent at any time; collection stops immediately.</li>
+</ul>
+<p><strong>Processor:</strong> PostHog Inc., EU-hosted infrastructure.<br>
+<strong>Retention:</strong> <code>[FILL: PostHog EU project retention period]</code><br>
+<strong>Processor contact for retention or deletion requests:</strong> privacy@posthog.com</p>
+<p>If diagnostics are left off, Balise makes no analytics connection at all.</p>
+
+<h2>What Balise never does</h2>
+<ul>
+  <li>No advertising, and no advertising SDK is present.</li>
+  <li>No account, sign-in or user identifier.</li>
+  <li>No access to contacts, calendar, photos, files, health or fitness data.</li>
+  <li>No selling or sharing of data with third parties.</li>
+  <li>No tracking across apps or websites.</li>
+  <li>No automatic capture of screens, errors, crashes or your identity.</li>
+</ul>
+
+<h2>Your controls</h2>
+<ul>
+  <li><strong>Recordings</strong> can be deleted individually in the app. A recording belonging to an
+      active trip is protected until the trip ends.</li>
+  <li><strong>Offline map packages</strong> can be deleted individually. The map currently in use is protected.</li>
+  <li><strong>Diagnostics</strong> can be turned off at any time in <em>Settings → Privacy &amp; data</em>.</li>
+  <li><strong>Everything</strong> is removed by uninstalling Balise, or by clearing its app data in the
+      watch's system settings.</li>
+</ul>
+<p>Individual route deletion is not yet available in the app; clearing app data or uninstalling
+removes imported routes along with everything else.</p>
+
+<h2>Permissions and why they exist</h2>
+<table>
+  <tr><th>Permission</th><th>Why</th></tr>
+  <tr><td>Precise and approximate location</td><td>Draw the map, record your track, follow a route</td></tr>
+  <tr><td>Foreground service (location)</td><td>Keep recording reliably while the screen is off</td></tr>
+  <tr><td>Foreground service (data sync)</td><td>Keep a map download alive while it transfers</td></tr>
+  <tr><td>Wake lock</td><td>Prevent a recording or download from being interrupted</td></tr>
+  <tr><td>Notifications</td><td>Show the ongoing recording and download notifications</td></tr>
+  <tr><td>Vibrate</td><td>Haptic alerts while following a route</td></tr>
+  <tr><td>Internet, Wi-Fi state</td><td>Download offline maps, and optional diagnostics if enabled</td></tr>
+</table>
+
+<h2>Children</h2>
+<p>Balise is not directed at children and does not knowingly collect data from them.</p>
+
+<h2>Changes to this policy</h2>
+<p>Material changes will be reflected here with an updated date. Because Balise's Data Safety
+declaration on Google Play must match this policy, both are updated together.</p>
+
+<h2>Contact</h2>
+<p><code>[FILL: dedicated privacy e-mail address]</code></p>
+
+</body>
+</html>
