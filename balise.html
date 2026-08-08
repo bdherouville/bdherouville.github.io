@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balise — Privacy policy</title>
+<meta name="description" content="Privacy policy for Balise, an offline trail companion for Wear OS watches.">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    max-width: 44rem; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header { border-bottom: 1px solid rgba(128,128,128,.3); padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  h1 { font-size: 1.8rem; margin: 0 0 .35rem; }
+  h2 { font-size: 1.15rem; margin-top: 2.25rem; }
+  .app { font-size: .95rem; color: #666; margin: 0; }
+  .updated { color: #666; font-size: .9rem; }
+  .lede { font-size: 1.05rem; border-left: 3px solid #C6A96A; padding-left: 1rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid rgba(128,128,128,.35); vertical-align: top; }
+  th { font-weight: 600; }
+  code { background: rgba(128,128,128,.15); padding: .1rem .3rem; border-radius: 3px; }
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid rgba(128,128,128,.3); font-size: .9rem; color: #666; }
+  @media (prefers-color-scheme: dark) { .app, .updated, footer { color: #999; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Balise — Privacy policy</h1>
+  <p class="app">Balise · <code>io.github.bdherouville.balise</code> · a trail companion for Wear OS watches</p>
+  <p class="updated">Effective 2026-08-08 · last updated 2026-08-08</p>
+</header>
+
+<p>Balise records GPS tracks and follows routes you load yourself, using map data stored on the
+watch. This policy covers the Balise app distributed on Google Play. It is the only privacy policy
+for that app, and it applies to every user, everywhere.</p>
+
+<p class="lede"><strong>Your location never leaves your watch.</strong> Balise has no account,
+no login, no ads, and no companion phone app. It works fully offline.</p>
+
+<h2>Who is responsible for your data</h2>
+<p>Bertrand d'Hérouville, publisher of Balise, is the data controller.<br>
+Privacy contact: <a href="mailto:balise-privacy@probos.fr">balise-privacy@probos.fr</a></p>
+
+<h2>What Balise stores on your watch</h2>
+<p>All of it stays in the app's private storage on the watch. None of it is uploaded, and Android's
+automatic cloud backup is disabled for this app, so it is not copied off the device that way either.</p>
+<ul>
+  <li><strong>Recorded tracks</strong> — GPS positions, timestamps and derived session data for trips you record.</li>
+  <li><strong>Routes</strong> — GPX files you import, and their geometry.</li>
+  <li><strong>Offline map packages</strong> — map data you choose to download.</li>
+  <li><strong>Your settings</strong>, including whether you have opted in to diagnostics.</li>
+</ul>
+
+<h2>Data collected and shared</h2>
+<p>Google Play defines <em>collected</em> as transmitted off the device, and <em>shared</em> as
+transferred to a third party. Under those definitions:</p>
+<table>
+  <tr><th>Data type</th><th>Collected</th><th>Shared</th><th>Purpose</th><th>Optional</th></tr>
+  <tr>
+    <td>Precise or approximate location</td>
+    <td><strong>No</strong></td><td><strong>No</strong></td>
+    <td>Used on the watch only — to draw the map, record your track and follow your route</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>App interaction and diagnostics (pseudonymous event names)</td>
+    <td>Yes, only if you turn it on</td><td>Processed by PostHog on our behalf; not sold or shared for advertising</td>
+    <td>App stability and understanding which features are used</td>
+    <td><strong>Yes — off by default</strong></td>
+  </tr>
+</table>
+<p>No other category is collected. Balise requests no personal identifiers, no contacts, no files,
+no photos, no messages, no health or fitness data, and no financial information.</p>
+
+<h2>Location</h2>
+<p>Balise requests precise and approximate location, and runs a foreground service while recording
+so a trip is not lost when the screen turns off.</p>
+<p>Your location is used <strong>only on the watch</strong>. <strong>It is never transmitted
+anywhere.</strong> No code path in Balise sends a coordinate off the device, and no diagnostics event
+can carry one — the diagnostics described below can only send values from a fixed, reviewed list of
+event names.</p>
+<p>Balise does record your location locally, which is the whole point of the app, and you can delete
+it at any time.</p>
+
+<h2>When Balise uses the network</h2>
+<p>Balise makes no network connection during a trip. Exactly two things can reach the internet, both
+outside of recording:</p>
+<ol>
+  <li><strong>Downloading offline maps</strong> — only when you explicitly ask, over HTTPS, from the
+      map catalogue the app is configured with. Map data is signed and verified before installation.</li>
+  <li><strong>Optional anonymous diagnostics</strong> — off by default. See below.</li>
+</ol>
+<p>Nothing else in the app opens a connection.</p>
+
+<h2>Optional diagnostics</h2>
+<p>Diagnostics are <strong>off by default</strong> and only run if you explicitly turn them on in
+<em>Settings → Privacy &amp; data</em>.</p>
+<ul>
+  <li>Only <strong>pseudonymous event names</strong> from a fixed, reviewed list are sent — never location,
+      route names, file names, screen contents, free text, error text, or anything identifying you.</li>
+  <li>Data goes to PostHog, hosted in the EU, over HTTPS.</li>
+  <li>Capture is <strong>suspended entirely</strong> while a trip is active, paused or in an uncertain state.
+      Diagnostics never run alongside a recording.</li>
+  <li>You can withdraw consent at any time; collection stops immediately.</li>
+</ul>
+<p><strong>Processor:</strong> PostHog Inc., EU-hosted infrastructure.<br>
+<strong>Legal basis (GDPR):</strong> your consent, given by turning the setting on.<br>
+<strong>Retention:</strong> 30 days from ingestion, after which events are deleted by the processor.<br>
+<strong>Processor contact for retention or deletion requests:</strong>
+<a href="mailto:privacy@posthog.com">privacy@posthog.com</a></p>
+<p>If diagnostics are left off, Balise makes no analytics connection at all.</p>
+
+<h2>Deleting your data</h2>
+<p>Because Balise has no account, there is no server-side profile to erase, and no request form to
+fill in — deletion is something you perform directly:</p>
+<ul>
+  <li><strong>Recordings</strong> can be deleted individually in the app. A recording belonging to an
+      active trip is protected until the trip ends.</li>
+  <li><strong>Offline map packages</strong> can be deleted individually. The map currently in use is protected.</li>
+  <li><strong>Everything at once</strong> is removed by uninstalling Balise, or by clearing its app data in
+      the watch's system settings. This also removes imported routes, which cannot yet be deleted individually.</li>
+  <li><strong>Diagnostics events already sent</strong>, if you had opted in, expire after 30 days. To have them
+      erased sooner, write to <a href="mailto:balise-privacy@probos.fr">balise-privacy@probos.fr</a> and we
+      will pass the request to the processor.</li>
+</ul>
+
+<h2>Your rights</h2>
+<p>Where the GDPR applies you have the rights of access, rectification, erasure, restriction,
+objection and portability, and the right to complain to your national supervisory authority. In
+practice most of these are moot: the app holds your data on your own device and we hold nothing that
+identifies you. Write to <a href="mailto:balise-privacy@probos.fr">balise-privacy@probos.fr</a> to
+exercise any of them.</p>
+
+<h2>What Balise never does</h2>
+<ul>
+  <li>No advertising, and no advertising SDK is present.</li>
+  <li>No account, sign-in or user identifier.</li>
+  <li>No access to contacts, calendar, photos, files, health or fitness data.</li>
+  <li>No selling or sharing of data with third parties, and no transfer for advertising or brokerage.</li>
+  <li>No tracking across apps or websites.</li>
+  <li>No automatic capture of screens, errors, crashes or your identity.</li>
+</ul>
+
+<h2>Permissions and why they exist</h2>
+<table>
+  <tr><th>Permission</th><th>Why</th></tr>
+  <tr><td>Precise and approximate location</td><td>Draw the map, record your track, follow a route</td></tr>
+  <tr><td>Foreground service (location)</td><td>Keep recording reliably while the screen is off</td></tr>
+  <tr><td>Foreground service (data sync)</td><td>Keep a map download alive while it transfers</td></tr>
+  <tr><td>Wake lock</td><td>Prevent a recording or download from being interrupted</td></tr>
+  <tr><td>Notifications</td><td>Show the ongoing recording and download notifications</td></tr>
+  <tr><td>Vibrate</td><td>Haptic alerts while following a route</td></tr>
+  <tr><td>Internet, Wi-Fi state</td><td>Download offline maps, and optional diagnostics if enabled</td></tr>
+</table>
+
+<h2>Children</h2>
+<p>Balise is not directed at children, is not listed in a children's category, and does not knowingly
+collect data from anyone under 13 (or the equivalent minimum age in your country).</p>
+
+<h2>Security</h2>
+<p>Data stays in the app's private storage, which Android isolates from other apps. Every network
+connection Balise makes uses HTTPS, and downloaded map packages are cryptographically signed and
+verified before they are installed.</p>
+
+<h2>Changes to this policy</h2>
+<p>Material changes will be reflected here with an updated effective date. Because Balise's Data
+Safety declaration on Google Play must match this policy, both are updated together.</p>
+
+<h2>Contact</h2>
+<p><a href="mailto:balise-privacy@probos.fr">balise-privacy@probos.fr</a></p>
+
+<footer>
+Balise for Wear OS · published by Bertrand d'Hérouville · this page is the privacy policy referenced
+from the app's Google Play listing.
+</footer>
+
+</body>
+</html>
