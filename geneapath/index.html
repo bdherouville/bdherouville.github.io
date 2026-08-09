@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GeneaPath — guide du testeur</title>
+<meta name="description" content="GeneaPath consulte la base généalogique Roglo à la voix. Guide pour les testeurs fermés." />
+<style>
+  /* Le registre — the app's own identity: ruled paper, iron-gall ink, gold. Palette taken
+     from the launcher icon rather than invented. */
+  :root {
+    --papier: #F1F2EC;
+    --velin: #FBFBF7;
+    --encre: #16202C;
+    --estompe: #55606D;
+    --reglure: #D2D6CB;
+    --reglure-forte: #797F74;
+    --or: #7A5A06;
+    --or-aplat: #A8811A;
+    --vert: #1F5D4E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --papier: #10161F; --velin: #18202B; --encre: #E8E9E2; --estompe: #97A1AC;
+      --reglure: #2A3441; --reglure-forte: #6E7885;
+      --or: #D9B24C; --or-aplat: #C9A227; --vert: #6FC2A6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --papier: #10161F; --velin: #18202B; --encre: #E8E9E2; --estompe: #97A1AC;
+    --reglure: #2A3441; --reglure-forte: #6E7885;
+    --or: #D9B24C; --or-aplat: #C9A227; --vert: #6FC2A6;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--papier); color: var(--encre);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 clamp(1.1rem, 4vw, 2.5rem) 5rem; }
+
+  header { border-bottom: 2px solid var(--encre); padding: clamp(2.5rem,6vw,4rem) 0 1.4rem; margin-bottom: 2.5rem; }
+  .eyebrow { font-size: .7rem; letter-spacing: .17em; text-transform: uppercase; color: var(--or); font-weight: 600; margin: 0 0 .8rem; }
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; font-weight: 600;
+    margin: 0 0 .6rem; letter-spacing: -.015em; text-wrap: balance;
+  }
+  .standfirst { font-size: clamp(1rem,2vw,1.14rem); color: var(--estompe); max-width: 58ch; margin: 0; }
+  h2 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: clamp(1.4rem,3vw,1.8rem); font-weight: 600; margin: 3rem 0 1rem;
+    padding-bottom: .5rem; border-bottom: 1px solid var(--reglure); text-wrap: balance;
+  }
+  h3 { font-size: 1rem; font-weight: 650; margin: 2rem 0 .6rem; }
+  p, li { max-width: 66ch; }
+  a { color: var(--or); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; border-radius: 2px; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em;
+    background: var(--velin); border: 1px solid var(--reglure); border-radius: 3px; padding: .1em .35em;
+  }
+
+  /* Spoken phrases are the app's real vocabulary; set them as the app does. */
+  .dire {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-style: italic; font-size: 1.05rem; color: var(--encre);
+  }
+  ul.phrases { list-style: none; padding: 0; display: grid; gap: .5rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(15rem,1fr)); }
+  ul.phrases li { padding-left: 1rem; border-left: 2px solid var(--or-aplat); }
+
+  .shots { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin: 1.5rem 0 0; }
+  figure { margin: 0; }
+  figure img {
+    width: 100%; height: auto; display: block; border: 1px solid var(--reglure); border-radius: 10px;
+  }
+  figcaption { font-size: .86rem; color: var(--estompe); margin-top: .55rem; }
+  figcaption b { color: var(--encre); font-weight: 650; display: block; }
+
+  .etapes { counter-reset: step; list-style: none; padding: 0; }
+  .etapes li { counter-increment: step; padding-left: 2.4rem; position: relative; margin-bottom: 1rem; }
+  .etapes li::before {
+    content: counter(step); position: absolute; left: 0; top: .05rem;
+    width: 1.6rem; height: 1.6rem; border: 1px solid var(--or-aplat); border-radius: 50%;
+    color: var(--or); font-size: .8rem; font-weight: 650;
+    display: grid; place-items: center;
+  }
+
+  .note {
+    border: 1px solid var(--reglure); border-left: 3px solid var(--or-aplat);
+    background: var(--velin); border-radius: 4px; padding: 1rem 1.15rem; margin: 1.4rem 0; max-width: 66ch;
+  }
+  .note > :first-child { margin-top: 0; }
+  .note > :last-child { margin-bottom: 0; }
+
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; border: 1px solid var(--reglure); }
+  th, td { text-align: left; padding: .55rem .75rem; border-bottom: 1px solid var(--reglure); vertical-align: top; }
+  thead th { background: var(--velin); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--estompe); }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  footer { border-top: 1px solid var(--reglure); margin-top: 3rem; padding-top: 1.2rem; font-size: .85rem; color: var(--estompe); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Test fermé · version 0.1</p>
+  <h1>GeneaPath</h1>
+  <p class="standfirst">
+    Consultez Roglo — 11,2 millions de personnes — en parlant. Vous posez la question à voix haute,
+    l’application vous répond, et chaque personne ouverte s’inscrit dans un registre que vous
+    pouvez relire ensuite.
+  </p>
+</header>
+
+<h2>L’idée en une phrase</h2>
+<p>
+  Roglo est une base généalogique considérable, mais elle se consulte à l’écran, un formulaire à la
+  fois. GeneaPath en fait une conversation : vous demandez quelqu’un, puis vous continuez —
+  <span class="dire">« son père »</span>, <span class="dire">« ses enfants »</span> — sans jamais
+  répéter le nom. L’application garde en tête la personne en cours.
+</p>
+<p>
+  N’importe quel casque Bluetooth convient. Les lunettes Ray-Ban Meta en sont un : l’application
+  s’en sert comme micro et haut-parleur, rien de plus. Aucune application Meta n’est nécessaire.
+</p>
+
+<h2>Un échange type</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Vous dites</th><th>GeneaPath répond</th></tr></thead>
+  <tbody>
+    <tr><td class="dire">« cherche Charlemagne »</td><td>Charles I de Herstal. Né en 747, décédé en 814. Enfant de Pépin I et Berthe au Grand pied de Laon. 10 unions, 19 enfants.</td></tr>
+    <tr><td class="dire">« son père »</td><td>Pépin de Herstal. Décédé en 768. Enfant de Charles Martel de Herstal et Rotrude de Hesbaye.</td></tr>
+    <tr><td class="dire">« ses ancêtres sur trois générations »</td><td>Génération 2 : Charles Martel de Herstal, Rotrude de Hesbaye…</td></tr>
+    <tr><td class="dire">« lien avec Charles Martel »</td><td>61 personnes portent ce nom. Je les affiche à l’écran : touchez la bonne.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>À la première ouverture</h2>
+<p>Quatre écrans expliquent le principe. Ils ne reviennent pas ensuite.</p>
+<div class="shots">
+  <figure>
+    <img src="shots/01-parler.png" alt="Écran d’accueil : un échange parlé entre l’utilisateur et l’application" />
+    <figcaption><b>Vous parlez, elle répond</b>L’échange complet, tel qu’il se déroule.</figcaption>
+  </figure>
+  <figure>
+    <img src="shots/02-grammaire.png" alt="Liste des phrases reconnues par l’application" />
+    <figcaption><b>Ce que vous pouvez dire</b>Les tournures réellement reconnues, pas des exemples approximatifs.</figcaption>
+  </figure>
+  <figure>
+    <img src="shots/03-registre-explique.png" alt="Explication du registre et du trait doré de filiation" />
+    <figcaption><b>Le trait doré</b>Il relie les personnes atteintes de proche en proche.</figcaption>
+  </figure>
+  <figure>
+    <img src="shots/04-acces.png" alt="Les trois niveaux d’accès à Roglo" />
+    <figcaption><b>Votre niveau d’accès</b>Anonyme, ami ou magicien, selon vos identifiants.</figcaption>
+  </figure>
+</div>
+
+<h2>Le registre</h2>
+<div class="shots">
+  <figure>
+    <img src="shots/05-registre.png" alt="Le registre : liste des personnes ouvertes, reliées par un trait" />
+    <figcaption><b>Ce que vous venez de parcourir</b>Un point doré signale une recherche par nom ; un cercle vide, quelqu’un atteint depuis la personne précédente. Le trait doré dessine la lignée remontée.</figcaption>
+  </figure>
+  <figure>
+    <img src="shots/06-reglages.png" alt="Écran Accès à Roglo : identifiants et niveau d’accès" />
+    <figcaption><b>Accès à Roglo</b>Vos identifiants, et le niveau qu’ils ouvrent réellement. Vérifié automatiquement, sans bouton à presser.</figcaption>
+  </figure>
+</div>
+<p>
+  Appuyez sur une ligne pour rouvrir la personne et l’entendre à nouveau. Appuyez deux fois pour
+  ouvrir sa fiche Roglo dans votre navigateur — c’est le lien permanent, celui qui reste valable
+  dans le temps.
+</p>
+
+<h2>Ce que vous pouvez dire</h2>
+<ul class="phrases">
+  <li class="dire">cherche Charlemagne</li>
+  <li class="dire">son père · sa mère</li>
+  <li class="dire">ses enfants</li>
+  <li class="dire">ses frères et sœurs</li>
+  <li class="dire">son épouse</li>
+  <li class="dire">ses ancêtres sur trois générations</li>
+  <li class="dire">sa descendance</li>
+  <li class="dire">lien avec Charles Martel</li>
+  <li class="dire">le premier · numéro 3</li>
+  <li class="dire">retour · suite · répète</li>
+  <li class="dire">quel accès</li>
+  <li class="dire">arrête</li>
+</ul>
+<p>
+  L’anglais fonctionne aussi, et les accents sont facultatifs : la reconnaissance vocale les perd
+  souvent, l’application ne s’en formalise pas.
+</p>
+
+<h2>Pour commencer</h2>
+<ol class="etapes">
+  <li>Acceptez l’invitation de test reçue par courriel, puis installez GeneaPath depuis Google Play.</li>
+  <li>Ouvrez l’application et laissez-vous guider par les quatre écrans d’introduction.</li>
+  <li>Ouvrez <b>Accès à Roglo</b> (l’icône en forme de clé) et saisissez vos identifiants Roglo si vous en avez. Sans identifiants, l’accès reste anonyme et les personnes vivantes demeurent masquées.</li>
+  <li>Connectez votre casque Bluetooth si vous en utilisez un, puis revenez au registre.</li>
+  <li>Appuyez sur le cercle et dites <span class="dire">« cherche »</span> suivi d’un nom.</li>
+</ol>
+
+<div class="note">
+  <h3>Deux points à connaître</h3>
+  <p>
+    <b>Le calcul de parenté peut être long.</b> Roglo remonte les deux ascendances jusqu’à un
+    ancêtre commun ; entre deux personnes éloignées, cela dépasse parfois la minute. L’application
+    vous le dit plutôt que de rester muette.
+  </p>
+  <p>
+    <b>La reconnaissance des noms propres est le point faible.</b> C’est précisément ce que ce test
+    doit mesurer. Si un nom n’est jamais reconnu, notez-le : c’est l’information la plus utile que
+    vous puissiez remonter.
+  </p>
+</div>
+
+<h2>Ce qui nous intéresse</h2>
+<ul>
+  <li>Les noms que la reconnaissance vocale n’attrape jamais.</li>
+  <li>Les tournures que vous avez essayées spontanément et qui n’ont pas fonctionné.</li>
+  <li>Les réponses trop longues à écouter, ou au contraire trop sèches.</li>
+  <li>Le comportement avec le téléphone en poche et l’écran éteint.</li>
+</ul>
+
+<footer>
+  GeneaPath 0.1 — test interne. Les données proviennent de la base
+  <a href="https://roglo.eu/roglo">Roglo</a>, sous licence CC BY-NC-ND 4.0 ; l’application est en
+  lecture seule et n’y écrit jamais. Vos identifiants restent dans le coffre-fort Android de votre
+  téléphone.
+</footer>
+
+</div>
+</body>
+</html>
